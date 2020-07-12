@@ -9,11 +9,15 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
     <script src="https://d3js.org/d3.v5.min.js"></script>
-    <title>Hello, world!</title>
+    <title>Short Term Practice Game</title>
   </head>
   <body>
-    
-    <div id="canvas"></div>
+    <div id="instructions" class="instructions">
+      <h1>Welcome To Short Term Memory Practice!</h1>
+      <p>You need to memorize the number inside the circles and then click them in ascending order</p>
+      <button id="start-btn" class="start-btn" type="button"> Start! </button>
+    </div>
+    <div id="canvas" style="display:none;"></div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
