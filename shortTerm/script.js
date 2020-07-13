@@ -3,26 +3,27 @@ d3.select("#start-btn").on("click",renderGame);
 
 function renderGame(){
     d3.select("#instructions").style("display","none");
-    d3.select("body").append("text").text("get ready!");
+    d3.select("body").append("p").text("Get Ready!");
     setTimeout(display_buttons,1000);
 }
-
+let level = 3;
 function display_buttons(){
-
+    d3.select("body").selectAll("p").remove();
     let radius = 25;
     let width = 600;
-    let height = 200;
+    let height = 250;
     let svg = d3.select("#canvas")
         .style("display","block")
         .append("div") 
-        .classed("svg-container",true)
-        .append("svg")
-        .attr("preserveAspectRatio", "xMinYMin meet")
-        .attr("viewBox", `0 0 ${width} ${height}`)
-        .classed("svg-content-responsive", true)
+            .attr("id","game-viewbox")
+            .classed("svg-container",true)
+            .append("svg")
+                .attr("id","svg_game")       
+                .attr("preserveAspectRatio", "xMinYMin meet")
+                .attr("viewBox", `0 0 ${width} ${height}`)
+                .classed("svg-content-responsive", true)
         ;
     let lost = false;
-    let level = 3;
     //while(!lost){
 
     let x = Math.ceil(Math.random()*(width-radius))+radius;
@@ -38,10 +39,10 @@ function display_buttons(){
                 let x1 = coordinates_buffer[j][0];
                 let y1 = coordinates_buffer[j][1];
                 let euclidean = Math.sqrt(Math.pow((x1-x),2)+Math.pow((y1-y),2));
-                if( euclidean < 2*radius){
+                if( euclidean < 2*radius){//if there exists another set of coordinates closeby
                     flag = true;
-                    break;//next set of coordinates
-                }//la hipotenusa tiene que ser >= 2R 
+                    break;
+                }
             }
         }
         coordinates_buffer.push([x,y]);
@@ -69,7 +70,7 @@ function display_buttons(){
 
     
 
-    setTimeout(function(){//hide numbers after 2 seconds
+    setTimeout(function(){//hide numbers and make circles clickable
         let numbers = d3.selectAll("text")
             .style("display","none")
             ;
@@ -88,18 +89,34 @@ function display_buttons(){
                     
                 }
                 else{
-                    d3.select("body").append("text").text("you lost!");
-                    lost=true;
-                    d3.selectAll("circle").remove();
-                    d3.selectAll("text").remove();
+                    numbers.style("display","block");
+                    d3.select(this)
+                        .style("opacity","1")
+                        .style("stroke","red")
+                        ;
+                    setTimeout(function(){
+                        d3.select("#game-viewbox").remove();
+                        let t = d3.select("body").append("p").text(`you LOST at level ${level}`);
+                        level = 3;
+                        setTimeout(function(){
+                            t.remove();
+                            d3.select("#instructions").style("display","block");
+                        },1000);
+                    },1000);
+                    
+
+                    
                 }
                 if(order==level){
-                    console.log("ganaste perri");
                     level++;
+                    console.log("ganaste perri");
+                    d3.select("#game-viewbox").remove();                   
+                    d3.select("body").append("p").text(`get ready for level ${level}`);
+                    setTimeout(display_buttons,1000);
                 }
             })
 
-    },200);
+    },1000);
 //}
 }
 
