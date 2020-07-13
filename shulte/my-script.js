@@ -1,3 +1,7 @@
+let plays_buffer = [];
+let plays = 0;
+let average = 0;
+let best = 200;
 function draw (){
     let div = document.getElementById("shulte");
     div.innerHTML = "";
@@ -28,7 +32,6 @@ function draw (){
         ordered[i]=i+1 ;shuffled[i]=i+1;
     }
     shuffled = shuffle(shuffled);
-      
 
     //append nodes to html
     for(let i=0 ; i < Y ; i++){
@@ -48,7 +51,20 @@ function draw (){
             if (checked == total){
                 let endTime = new Date().getTime();
                 let time = (endTime - startTime)/1000;
-                document.getElementById("time").innerHTML =  time + " seconds";
+                plays++;
+                plays_buffer.push(time);
+                average = 0;
+                for (let p = 0; p < plays_buffer.length ; p++){
+                  average += plays_buffer[p];
+                }
+                average= Math.round(((average/plays)+Number.EPSILON)*100)/100
+                if(time < best){
+                  best = time;  
+                }
+                document.getElementById("time").style.display = "block";
+                document.getElementById("time").innerHTML =  `<p> <strong> time </strong>: ${time} </p>
+                                                              <p> <strong> session average</strong>: ${average} </p>
+                                                              <p> <strong> best </strong> : ${best} </p>`;
             }
         }
         

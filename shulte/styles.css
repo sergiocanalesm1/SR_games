@@ -7,3 +7,13 @@
     margin-top: 50px;
     margin-bottom: 50px;
 }
+.time{
+    border-style: solid;
+    margin-left: 40%;
+    margin-right: 40%;
+    display:none;
+    
+}
+.stats{
+    text-align: center;
+}
