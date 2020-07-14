@@ -12,39 +12,40 @@
     <title>Shulte</title>
   </head>
   <body>
-    <br>
-    <h1 align="center">Welcome to shulte table!</h1>
-  <div class="settings" align="center">
-    <p>click the numbers in ascending order without taking your sight off the center</p>
-    <p>please insert the table's dimensions</p>
-        <select id="x">
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4" selected>4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-      </select>
-      *
-      <select id="y">
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4" selected>4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-      </select>
+    <div id="shulte">
       <br>
-      <br>
-      <input type="button" onclick="draw()" value="Start!" />
-  </div>
-    <div class="container" id="container">
-      <div class="shulte" id="shulte" align="center"></div>
+      <h1 align="center">Welcome to shulte table!</h1>
+      <div class="settings" align="center">
+        <p>click the numbers in ascending order without taking your sight off the center</p>
+        <p>please insert the table's dimensions</p>
+            <select id="x">
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4" selected>4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+          </select>
+          *
+          <select id="y">
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4" selected>4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+          </select>
+          <br>
+          <br>
+          <input type="button" onclick="draw()" value="Start!" />
+      </div>
+      <div class="container" id="container">
+        <div class="shulte" id="shulte" align="center"></div>
+      </div>
+      
+      <div class="stats" id="stats" align="center">
+        <div id="checked" ></div>
+        <div id="time" ></div>
+      </div>
     </div>
-   
-    <div class="stats" id="stats" align="center">
-      <div id="checked" ></div>
-      <div id="time" ></div>
-    </div>
-
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     

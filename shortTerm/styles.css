@@ -14,11 +14,13 @@
     top: 10px;
     left: 0;
     border-style: solid;
-    border-color: red;
+    border-color: grey;
 }
 .instructions{
-  margin:2%;
+  margin-top: 20%;
+  
 }
+
 p {
   text-align: center;
   margin-top: 20%;

@@ -1,13 +1,16 @@
 
-d3.select("#start-btn").on("click",renderGame);
 
+
+d3.select("#start-btn").on("click",renderGame);
+let currentBest = 3;
 function renderGame(){
+    
     d3.select("#instructions").style("display","none");
     d3.select("body").append("p").text("Get Ready!");
     setTimeout(display_buttons,1000);
 }
 let level = 3;
-function display_buttons(){
+function display_buttons(){  
     d3.select("body").selectAll("p").remove();
     let radius = 25;
     let width = 600;
@@ -97,10 +100,16 @@ function display_buttons(){
                     setTimeout(function(){
                         d3.select("#game-viewbox").remove();
                         let t = d3.select("body").append("p").text(`you LOST at level ${level}`);
-                        level = 3;
+
+                        
                         setTimeout(function(){
                             t.remove();
                             d3.select("#instructions").style("display","block");
+                           
+                            if(currentBest < level ){
+                                d3.select("#best").node().innerHTML = `<span id="best">Level ${level}</span>`;
+                            }
+                            level = 3;
                         },1000);
                     },1000);
                     
@@ -109,7 +118,7 @@ function display_buttons(){
                 }
                 if(order==level){
                     level++;
-                    console.log("ganaste perri");
+                    
                     d3.select("#game-viewbox").remove();                   
                     d3.select("body").append("p").text(`get ready for level ${level}`);
                     setTimeout(display_buttons,1000);
