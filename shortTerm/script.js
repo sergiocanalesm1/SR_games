@@ -3,6 +3,10 @@
 
 d3.select("#start-btn").on("click",renderGame);
 let currentBest = 3;
+let radius = 25;
+let width = 600;
+let height = 250;
+
 function renderGame(){
     
     d3.select("#instructions").style("display","none");
@@ -12,9 +16,7 @@ function renderGame(){
 let level = 3;
 function display_buttons(){  
     d3.select("body").selectAll("p").remove();
-    let radius = 25;
-    let width = 600;
-    let height = 250;
+    
     let svg = d3.select("#canvas")
         .style("display","block")
         .append("div") 
@@ -26,23 +28,53 @@ function display_buttons(){
                 .attr("viewBox", `0 0 ${width} ${height}`)
                 .classed("svg-content-responsive", true)
         ;
-    let lost = false;
-    //while(!lost){
-
+    
+   
+    
     let x = Math.ceil(Math.random()*(width-radius))+radius;
     let y = Math.ceil(Math.random()*(height-radius))+radius;
     let coordinates_buffer = [[x,y]];
-    for(let i=0; i<level;i++){
+    let current_id = Math.ceil(Math.random()*8);
+    let ordered_ids = [current_id];
+    let k =0;
+    for(let i = 0; i<level ;i++){//setup ids first
+        if(i<level-1){//skip last 
+            ordered_ids.push(current_id);           
+            k = i;
+            flag = true;
+            while(flag){//set ordered ids from 1-9 
+                if(ordered_ids[k+1] < ordered_ids[k]){
+                    //switch place in array
+                    let swap_temp = ordered_ids[k+1];
+                    ordered_ids[k+1] = ordered_ids[k];
+                    ordered_ids[k] = swap_temp;
+
+                }
+                else if(ordered_ids[k+1] == ordered_ids[k]){
+                    ordered_ids.splice(k+1,1);//remove current_id
+                    current_id =  Math.ceil(Math.random()*8);//create new
+                    ordered_ids.push(current_id);
+                    k = i+1; //reset cicle
+                }
+                else{
+                    flag = false;
+                }
+                k--;
+            }
+        }
+    }
+    for(let i=0; i<level;i++){//draw circle by circle
         flag = true;
-        while(flag){ //so that no two coordinates are repeated
+        while(flag){ // so that no two coordinates closer than 2R
             x = Math.ceil(Math.random()*(width-2*radius))+radius;
             y = Math.ceil(Math.random()*(height-2*radius))+radius;
             flag = false;
+            
             for(let j=0;j<coordinates_buffer.length;j++){
                 let x1 = coordinates_buffer[j][0];
                 let y1 = coordinates_buffer[j][1];
                 let euclidean = Math.sqrt(Math.pow((x1-x),2)+Math.pow((y1-y),2));
-                if( euclidean < 2*radius){//if there exists another set of coordinates closeby
+                if( euclidean < 2*radius){
                     flag = true;
                     break;
                 }
@@ -59,18 +91,20 @@ function display_buttons(){
             .attr("stroke-width","5")
 
             ;
-            //create a button a draw it as a circle with css
+            //create a button and draw it as a circle with css
         svg.append("text")
-            .attr("id",`circle_${i}`)
+            .attr("id",`circle_${ordered_ids[i]}`)
             .attr("x",x+"px")
             .attr("y",y+"px")
-            .text(i+1)
+            .text(ordered_ids[i])           
             .style("font-size", "40px")
             .attr("text-anchor","middle")
             .attr("alignment-baseline","central")
             ;
+            
+            
+            
     }
-
     
 
     setTimeout(function(){//hide numbers and make circles clickable
@@ -78,7 +112,7 @@ function display_buttons(){
             .style("display","none")
             ;
         let order = 0;
-        let circles = d3.selectAll("circle")
+        d3.selectAll("circle")
             .on("mouseover",function(){
                 d3.select(this).style("opacity",'0.7'); 
             })
@@ -87,8 +121,8 @@ function display_buttons(){
             })
             .on("click",function(d,i){
                 if(i==order){
-                    d3.select(`#circle_${i}`).style("display","block");
-                    order++;
+                    d3.select(`#circle_${ordered_ids[order++]}`).style("display","block");
+                    
                     
                 }
                 else{
@@ -126,7 +160,7 @@ function display_buttons(){
             })
 
     },1000);
-//}
+
 }
 
 
