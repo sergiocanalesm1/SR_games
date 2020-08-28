@@ -151,11 +151,16 @@ function display_buttons(){
                     
                 }
                 if(order==level){
+                    d3.select(`#circle_${ordered_ids[order]}`).style("display","block");
+                    d3.selectAll("circle").style("stroke","green");
+                    setTimeout(function(){
+                        d3.select("#game-viewbox").remove();                   
+                        d3.select("body").append("p").text(`get ready for level ${level}`);
+                        setTimeout(display_buttons,1000);
+                    },500)
                     level++;
                     
-                    d3.select("#game-viewbox").remove();                   
-                    d3.select("body").append("p").text(`get ready for level ${level}`);
-                    setTimeout(display_buttons,1000);
+              
                 }
             })
 
