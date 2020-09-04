@@ -52,7 +52,7 @@ function display_buttons(){
                 }
                 else if(ordered_ids[k+1] == ordered_ids[k]){
                     ordered_ids.splice(k+1,1);//remove current_id
-                    current_id =  Math.ceil(Math.random()*8);//create new
+                    current_id =  Math.ceil(Math.random()*9);//create new
                     ordered_ids.push(current_id);
                     k = i+1; //reset cicle
                 }
