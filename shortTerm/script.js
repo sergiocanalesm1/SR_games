@@ -2,7 +2,6 @@
 
 
 d3.select("#start-btn").on("click",renderGame);
-let currentBest = 3;
 let radius = 25;
 let width = 600;
 let height = 250;
@@ -34,7 +33,7 @@ function display_buttons(){
     let x = Math.ceil(Math.random()*(width-radius))+radius;
     let y = Math.ceil(Math.random()*(height-radius))+radius;
     let coordinates_buffer = [[x,y]];
-    let current_id = Math.ceil(Math.random()*8);
+    let current_id = Math.ceil(Math.random()*9);
     let ordered_ids = [current_id];
     let k =0;
     for(let i = 0; i<level ;i++){//setup ids first
@@ -52,7 +51,7 @@ function display_buttons(){
                 }
                 else if(ordered_ids[k+1] == ordered_ids[k]){
                     ordered_ids.splice(k+1,1);//remove current_id
-                    current_id =  Math.ceil(Math.random()*8);//create new
+                    current_id =  Math.ceil(Math.random()*9);//create new
                     ordered_ids.push(current_id);
                     k = i+1; //reset cicle
                 }
@@ -88,7 +87,7 @@ function display_buttons(){
             .attr("r", radius)
             .attr("fill","white")
             .style("stroke","black")
-            .attr("stroke-width","5")
+            .attr("stroke-width","3")
 
             ;
             //create a button and draw it as a circle with css
@@ -139,7 +138,7 @@ function display_buttons(){
                         setTimeout(function(){
                             t.remove();
                             d3.select("#instructions").style("display","block");
-                           
+                           let currentBest = localStorage.getItem('best') ?? 0;
                             if(currentBest < level ){
                                 d3.select("#best").node().innerHTML = `<span id="best">Level ${level}</span>`;
                             }
